@@ -17,7 +17,11 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <button onClick={() => console.log(login("Asp3rity", "J2s3jAsd"))}>
+        <button onClick= {async () => {
+            const response = await login("Asp3rity", "J2s3jAsd?");
+            console.log(response);
+        }}
+        >
             Test Login
         </button>
         <p>
