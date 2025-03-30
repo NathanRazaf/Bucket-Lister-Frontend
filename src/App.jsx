@@ -1,7 +1,7 @@
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-import { login } from "./functions/account_functions.js";
+import { login } from "./functions/backend/account_functions.js";
 
 function App() {
 

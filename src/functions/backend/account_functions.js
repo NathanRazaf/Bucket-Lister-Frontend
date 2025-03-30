@@ -1,4 +1,4 @@
-import {ApiError, BACKEND_URL} from "../assets/consts.js";
+import {ApiError, BACKEND_URL} from "../../assets/consts.js";
 
 export const login = async (email_or_username, password) => {
     try {

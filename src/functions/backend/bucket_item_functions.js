@@ -1,14 +1,14 @@
-import {ApiError, BACKEND_URL} from "../assets/consts.js";
+import {ApiError, BACKEND_URL} from "../../assets/consts.js";
 
-export const createBucketList = async (token, title, description) => {
+export const createBucketItem = async (token, bucket_list_id, content) => {
     try {
-        const response = await fetch(`${BACKEND_URL}/api/bucket-lists`, {
+        const response = await fetch(`${BACKEND_URL}/api/bucket-lists/${bucket_list_id}/items`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`,
             },
-            body: JSON.stringify({ title, description }),
+            body: JSON.stringify({ content }),
         })
         return await response.json()
     } catch (error) {
@@ -19,9 +19,9 @@ export const createBucketList = async (token, title, description) => {
     }
 }
 
-export const getBucketLists = async (token) => {
+export const getBucketItems = async (token, bucket_list_id) => {
     try {
-        const response = await fetch(`${BACKEND_URL}/api/bucket-lists`, {
+        const response = await fetch(`${BACKEND_URL}/api/bucket-lists/${bucket_list_id}/items`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -37,9 +37,9 @@ export const getBucketLists = async (token) => {
     }
 }
 
-export const getBucketList = async (token, id) => {
+export const getBucketItem = async (token, bucket_list_id, item_id) => {
     try {
-        const response = await fetch(`${BACKEND_URL}/api/bucket-lists/${id}`, {
+        const response = await fetch(`${BACKEND_URL}/api/bucket-lists/${bucket_list_id}/items/${item_id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -56,15 +56,16 @@ export const getBucketList = async (token, id) => {
     }
 }
 
-export const updateBucketList = async (token, id, title, description, is_private) => {
+
+export const updateBucketItem = async (token, bucket_list_id, item_id, content, is_completed) => {
     try {
-        const response = await fetch(`${BACKEND_URL}/api/bucket-lists/${id}`, {
-            method: 'PUT',
+        const response = await fetch(`${BACKEND_URL}/api/bucket-lists/${bucket_list_id}/items/${item_id}`, {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`,
             },
-            body: JSON.stringify({ title, description, is_private }),
+            body: JSON.stringify({ content, is_completed }),
         })
         return await response.json()
     } catch (error) {
@@ -75,9 +76,9 @@ export const updateBucketList = async (token, id, title, description, is_private
     }
 }
 
-export const deleteBucketList = async (token, id) => {
+export const deleteBucketItem = async (token, bucket_list_id, item_id) => {
     try {
-        const response = await fetch(`${BACKEND_URL}/api/bucket-lists/${id}`, {
+        const response = await fetch(`${BACKEND_URL}/api/bucket-lists/${bucket_list_id}/items/${item_id}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -93,48 +94,13 @@ export const deleteBucketList = async (token, id) => {
     }
 }
 
-export const shareBucketList = async (token, id) => {
+export const toggleBucketItem = async (token, bucket_list_id, item_id) => {
     try {
-        const response = await fetch(`${BACKEND_URL}/api/bucket-lists/${id}/share`, {
+        const response = await fetch(`${BACKEND_URL}/api/bucket-lists/${bucket_list_id}/items/${item_id}/toggle`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`,
-            },
-        })
-        return await response.json()
-    } catch (error) {
-        if (error instanceof ApiError) {
-            throw error;
-        }
-        throw new ApiError("An unexpected error occurred", 500, error.message);
-    }
-}
-
-export const unshareBucketList = async (token, id) => {
-    try {
-        const response = await fetch(`${BACKEND_URL}/api/bucket-lists/${id}/share`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`,
-            },
-        })
-        return await response.json()
-    } catch (error) {
-        if (error instanceof ApiError) {
-            throw error;
-        }
-        throw new ApiError("An unexpected error occurred", 500, error.message);
-    }
-}
-
-export const getSharedBucketList = async (sharedToken) => {
-    try {
-        const response = await fetch(`${BACKEND_URL}/api/bucket-lists/shared/${sharedToken}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
             },
         })
         return await response.json()
