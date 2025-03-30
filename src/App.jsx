@@ -1,38 +1,34 @@
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import { login } from "./functions/backend/account_functions.js";
+// App.jsx
+import React from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import AuthForm from './components/AuthForm';
+import ProtectedRoute from './components/ProtectedRoute'; // We'll create this below
 
-function App() {
+const App = () => {
+    return (
+        <BrowserRouter>
+            <Routes>
+                {/* Redirect root to login */}
+                <Route path="/" element={<Navigate to="/login" replace />} />
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick= {async () => {
-            const response = await login("Asp3rity", "J2s3jAsd?");
-            console.log(response);
-        }}
-        >
-            Test Login
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+                {/* Auth Routes */}
+                <Route path="/login" element={<AuthForm />} />
+                <Route path="/signup" element={<AuthForm />} />
 
-export default App
+                {/* Protected Routes */}
+                <Route
+                    path="/dashboard"
+                    element={
+                        <ProtectedRoute>
+                        </ProtectedRoute>
+                    }
+                />
+
+                {/* Catch all - 404 */}
+                <Route path="*" element={<div>Page Not Found</div>} />
+            </Routes>
+        </BrowserRouter>
+    );
+};
+
+export default App;
