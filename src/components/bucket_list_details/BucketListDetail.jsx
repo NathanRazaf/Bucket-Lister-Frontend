@@ -178,6 +178,23 @@ const BucketListDetail = () => {
         }
     };
 
+    const handleDeleteBucketList = async () => {
+        if (!window.confirm('Are you sure you want to delete this bucket list? This action cannot be undone.')) {
+            return;
+        }
+
+        try {
+            const token = localStorage.getItem('token');
+            await deleteBucketList(token, bucketList.id);
+
+            // Navigate back to dashboard after successful deletion
+            navigate('/dashboard');
+        } catch (err) {
+            console.error('Error deleting bucket list:', err);
+            setError(err.message || 'Failed to delete bucket list. Please try again.');
+        }
+    };
+
     const handleShare = async () => {
         try {
             const token = localStorage.getItem('token');
@@ -265,6 +282,7 @@ const BucketListDetail = () => {
 
                     <div className="action-buttons">
                         <button className="share-button" onClick={handleShare}>Share</button>
+                        <button className="delete-button" onClick={handleDeleteBucketList}>Delete</button>
                     </div>
                 </div>
 

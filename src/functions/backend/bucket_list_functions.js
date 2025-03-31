@@ -102,7 +102,20 @@ export const deleteBucketList = async (token, id) => {
                 'Authorization': `Bearer ${token}`,
             },
         })
-        return await response.json()
+
+        // Check if response is OK
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({}));
+            throw new ApiError(errorData.detail || "Failed to delete bucket list", response.status);
+        }
+
+        // For 204 responses, return success without trying to parse JSON
+        if (response.status === 204) {
+            return { success: true };
+        }
+
+        // Only try to parse JSON for responses that aren't 204
+        return await response.json();
     } catch (error) {
         if (error instanceof ApiError) {
             throw error;
@@ -147,12 +160,13 @@ export const unshareBucketList = async (token, id) => {
     }
 }
 
-export const getSharedBucketList = async (sharedToken) => {
+export const getSharedBucketList = async (token, sharedToken) => {
     try {
         const response = await fetch(`${BACKEND_URL}/api/bucket-lists/shared/${sharedToken}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
             },
         })
         return await response.json()

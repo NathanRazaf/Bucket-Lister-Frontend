@@ -5,6 +5,7 @@ import AuthForm from './components/AuthForm';
 import ProtectedRoute from './components/ProtectedRoute'; // We'll create this below
 import Dashboard from "./components/Dashboard.jsx";
 import BucketListDetail from "./components/bucket_list_details/BucketListDetail.jsx";
+import CreateBucketListForm from "./components/CreateBucketListForm.jsx";
 
 const App = () => {
     return (
@@ -26,7 +27,22 @@ const App = () => {
                         </ProtectedRoute>
                     }
                 />
-                <Route path="/bucket-list/:id" element={<BucketListDetail />} />
+                <Route
+                    path="/bucket-list/:id"
+                    element={
+                    <ProtectedRoute>
+                        <BucketListDetail />
+                    </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/create-bucket-list"
+                    element={
+                    <ProtectedRoute>
+                        <CreateBucketListForm />
+                    </ProtectedRoute>
+                }
+                />
                 {/* Catch all - 404 */}
                 <Route path="*" element={<div>Page Not Found</div>} />
             </Routes>

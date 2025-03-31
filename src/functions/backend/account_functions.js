@@ -8,8 +8,19 @@ export const login = async (email_or_username, password) => {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ email_or_username, password }),
-        })
-        return await response.json()
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            // If response isn't in the 200-299 range
+            throw new ApiError(
+                data.detail || "Login failed",
+                response.status
+            );
+        }
+
+        return data;
     } catch (error) {
         if (error instanceof ApiError) {
             throw error;
@@ -26,8 +37,19 @@ export const register = async (email, username, password) => {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ email, username, password }),
-        })
-        return await response.json()
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            // If response isn't in the 200-299 range
+            throw new ApiError(
+                data.detail || "Registration failed",
+                response.status
+            );
+        }
+
+        return data;
     } catch (error) {
         if (error instanceof ApiError) {
             throw error;
@@ -45,7 +67,18 @@ export const me = async (token) => {
                 'Authorization': `Bearer ${token}`,
             },
         })
-        return await response.json()
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            // If response isn't in the 200-299 range
+            throw new ApiError(
+                data.detail || "Failed to get user data",
+                response.status
+            );
+        }
+
+        return data;
     } catch (error) {
         if (error instanceof ApiError) {
             throw error;
@@ -64,7 +97,18 @@ export const updateAccount = async (token, email, username, password) => {
             },
             body: JSON.stringify({ email, username, password }),
         })
-        return await response.json()
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            // If response isn't in the 200-299 range
+            throw new ApiError(
+                data.detail || "Failed to update account",
+                response.status
+            );
+        }
+
+        return data;
     } catch (error) {
         if (error instanceof ApiError) {
             throw error;

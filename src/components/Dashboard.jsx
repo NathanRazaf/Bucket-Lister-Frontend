@@ -3,12 +3,17 @@ import Header from "./dashboard_components/Header.jsx";
 import {useState, useEffect} from "react";
 import {getAllCollabBucketLists, getAllMyBucketLists} from "../functions/bucketListUses.js";
 import BucketListCard from "./dashboard_components/BucketListCard.jsx";
+import {Link} from "react-router-dom";
+import {getSharedBucketList} from "../functions/backend/bucket_list_functions.js";
 
 const Dashboard = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [bucketLists, setBucketLists] = useState([]);
     const [collabBucketLists, setCollabBucketLists] = useState([]);
+    const [shareCode, setShareCode] = useState('');
+    const [shareError, setShareError] = useState('');
+    const [shareSuccess, setShareSuccess] = useState('');
 
     useEffect(() => {
         // Fetch all data when component mounts
@@ -63,6 +68,34 @@ const Dashboard = () => {
         fetchAllData().then(r => r);
     };
 
+    // Handle Share Code Submission
+    const handleShareCodeSubmit = async (e) => {
+        e.preventDefault();
+        setShareError('');
+        setShareSuccess('');
+
+        if (!shareCode.trim()) {
+            setShareError("Please enter a share code");
+            return;
+        }
+
+        try {
+            const token = localStorage.getItem('token');
+
+            await getSharedBucketList(token, shareCode);
+
+            setShareSuccess("Bucket list added successfully!");
+            setShareCode('');
+
+            // Refresh the shared lists
+            const sharedLists = await getAllCollabBucketLists(token);
+            setCollabBucketLists(sharedLists);
+        } catch (error) {
+            console.error("Error adding shared bucket list:", error);
+            setShareError(error.message || "Failed to add shared bucket list");
+        }
+    };
+
     // If still loading, show a loading indicator for the entire page
     if (loading) {
         return (
@@ -90,7 +123,7 @@ const Dashboard = () => {
                     <>
                         <div className="bucket-lists-header">
                             <h2>My Bucket Lists</h2>
-                            <button className="create-button">Create New List</button>
+                            <Link to="/create-bucket-list" className="create-button">Create New List</Link>
                         </div>
 
                         {bucketLists.length === 0 ? (
@@ -110,25 +143,46 @@ const Dashboard = () => {
                             </div>
                         )}
 
-                        <div className="bucket-lists-header">
-                            <h2>Bucket Lists shared with me</h2>
-                        </div>
+                        <div className="bucket-lists-section">
+                            <div className="bucket-lists-header">
+                                <h2>Bucket Lists shared with me</h2>
+                            </div>
 
-                        {collabBucketLists.length === 0 ? (
-                            <div className="empty-state">
-                                <h3>No bucket list has been shared with you yet!</h3>
-                                <p>Ask a friend to share his bucket list so that you can share the same dreams.</p>
+                            <div className="share-code-form-container">
+                                <form onSubmit={handleShareCodeSubmit} className="share-code-form">
+                                    <div className="share-code-input-group">
+                                        <input
+                                            type="text"
+                                            className="share-code-input"
+                                            placeholder="Enter share code"
+                                            value={shareCode}
+                                            onChange={(e) => setShareCode(e.target.value)}
+                                        />
+                                        <button type="submit" className="share-code-button">
+                                            Add Shared List
+                                        </button>
+                                    </div>
+                                    {shareError && <p className="share-error-message">{shareError}</p>}
+                                    {shareSuccess && <p className="share-success-message">{shareSuccess}</p>}
+                                </form>
                             </div>
-                        ) : (
-                            <div className="bucket-lists-grid">
-                                {collabBucketLists.map(bucketList => (
-                                    <BucketListCard
-                                        key={bucketList.id}
-                                        bucketList={bucketList}
-                                    />
-                                ))}
-                            </div>
-                        )}
+
+                            {collabBucketLists.length === 0 ? (
+                                <div className="empty-state">
+                                    <h3>No bucket list has been shared with you yet!</h3>
+                                    <p>Ask a friend to share their bucket list so that you can share the same dreams.</p>
+                                </div>
+                            ) : (
+                                <div className="bucket-lists-grid">
+                                    {collabBucketLists.map(bucketList => (
+                                        <BucketListCard
+                                            key={bucketList.id}
+                                            bucketList={bucketList}
+                                        />
+                                    ))}
+                                </div>
+                            )}
+                        </div>
                     </>
                 )}
             </main>

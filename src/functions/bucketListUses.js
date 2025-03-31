@@ -30,7 +30,6 @@ export const getAllMyBucketLists = async (token) => {
                 items,
             });
         }
-        console.log(fullBucketLists);
         return fullBucketLists;
     } catch (error) {
         if (error instanceof ApiError) {

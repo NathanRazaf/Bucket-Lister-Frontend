@@ -63,6 +63,8 @@ const AuthForm = () => {
                     throw new Error(response.error);
                 }
 
+                console.log(response);
+
                 // Store token in localStorage
                 localStorage.setItem('token', response.access_token);
                 // Redirect to dashboard or home page
@@ -77,15 +79,16 @@ const AuthForm = () => {
                     throw new Error('Passwords do not match');
                 }
 
-                const response = await register(formData.email, formData.username, formData.password);
+                // Register the user
+                await register(formData.email, formData.username, formData.password);
 
-                if (response.error) {
-                    throw new Error(response.error);
-                }
+                // After successful registration, automatically log them in
+                const loginResponse = await login(formData.username, formData.password);
 
                 // Store token in localStorage
-                localStorage.setItem('token', response.access_token);
-                // Redirect to dashboard or home page
+                localStorage.setItem('token', loginResponse.access_token);
+
+                // Redirect to dashboard
                 navigate('/dashboard');
             }
         } catch (error) {

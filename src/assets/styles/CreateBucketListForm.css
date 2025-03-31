@@ -1,0 +1,150 @@
+.bucket-list-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    background: #ffe4e1; /* pink-white-ish background */
+}
+
+.bucket-list-form-container {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 300px;
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.bucket-list-form-container h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #ff69b4;
+}
+
+.form-wrapper {
+    min-height: 200px; /* Ensures consistent height between forms */
+}
+
+.bucket-list-form {
+    width: 100%;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #ff69b4;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ff69b4;
+    border-radius: 5px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+.form-group textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+.input-error {
+    border-color: #ff3333 !important;
+    background-color: #fff8f8;
+}
+
+.field-error {
+    color: #ff3333;
+    font-size: 0.8rem;
+    margin-top: 0.3rem;
+    animation: fadeIn 0.3s;
+}
+
+.character-count {
+    position: absolute;
+    right: 0;
+    font-size: 0.7rem;
+    color: #888;
+    margin-top: 0.2rem;
+}
+
+.submit-button {
+    width: 100%;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 5px;
+    background: #ff69b4;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease;
+}
+
+.submit-button:hover:not(:disabled) {
+    background: #ff5ba7;
+}
+
+.submit-button:disabled {
+    background: #ffb6c1;
+    cursor: not-allowed;
+}
+
+.loading-spinner {
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #ff69b4;
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.error-message, .success-message {
+    text-align: center;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    border-radius: 5px;
+    animation: fadeIn 0.3s;
+}
+
+.error-message {
+    color: #ff3333;
+    background-color: #fff8f8;
+    border: 1px solid #ffcccc;
+}
+
+.success-message {
+    color: #00aa00;
+    background-color: #f0fff0;
+    border: 1px solid #ccffcc;
+}
+
+@media (max-width: 768px) {
+    .bucket-list-form-container {
+        width: 95%;
+    }
+}

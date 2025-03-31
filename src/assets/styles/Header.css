@@ -6,6 +6,7 @@
     margin-bottom: 20px;
     background-color: #ff69b4;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 0.5rem 0;
 }
 
 .dashboard-header h1 {
@@ -113,4 +114,69 @@
 
 .logout-button {
     color: #dc3545;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .dashboard-header {
+        padding: 0.5rem 0;
+    }
+
+    .dashboard-header h1 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+        margin-left: 0.5rem;
+    }
+
+    .dashboard-header-buttons {
+        margin-right: 0.5rem;
+    }
+
+    .account-button {
+        padding: 4px 8px;
+    }
+
+    .account-icon {
+        width: 25px;
+        height: 25px;
+        font-size: 0.8rem;
+        margin-right: 6px;
+    }
+
+    .account-name {
+        font-size: 0.8rem;
+        max-width: 80px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .dropdown-arrow {
+        font-size: 8px;
+    }
+
+    .dropdown-menu {
+        width: 180px;
+        right: -10px;
+    }
+
+    .dropdown-menu button {
+        padding: 10px 12px;
+        font-size: 0.85rem;
+    }
+
+    /* For very small screens */
+    @media (max-width: 380px) {
+        .account-name {
+            display: none;
+        }
+
+        .account-icon {
+            margin-right: 2px;
+        }
+
+        .dashboard-header h1 {
+            font-size: 1.2rem;
+        }
+    }
 }

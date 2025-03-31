@@ -120,3 +120,64 @@
     text-decoration: none;
     color: white;
 }
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .bucket-list-card {
+        max-width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Fix for parent grid container */
+    .bucket-lists-grid {
+        display: flex;
+        flex-direction: column;
+        padding: 0;
+        margin: 0;
+        gap: 1rem;
+    }
+
+    .bucket-list-card-header {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+
+    .bucket-list-title {
+        font-size: 1.1rem;
+        /* Allow title to wrap if needed */
+        word-break: break-word;
+        max-width: 80%;
+    }
+
+    .bucket-list-description p {
+        font-size: 0.85rem;
+    }
+
+    .bucket-list-items li {
+        font-size: 0.85rem;
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
+
+    .bucket-list-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .view-button {
+        width: 100%;
+        text-align: center;
+        padding: 8px 0;
+        font-size: 0.9rem;
+    }
+
+    /* Ensure dashboard content has no unexpected padding */
+    .dashboard-content {
+        padding: 1rem;
+        box-sizing: border-box;
+    }
+}
