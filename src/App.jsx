@@ -3,6 +3,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import AuthForm from './components/AuthForm';
 import ProtectedRoute from './components/ProtectedRoute'; // We'll create this below
+import Dashboard from "./components/Dashboard.jsx";
 
 const App = () => {
     return (
@@ -20,6 +21,7 @@ const App = () => {
                     path="/dashboard"
                     element={
                         <ProtectedRoute>
+                            <Dashboard />
                         </ProtectedRoute>
                     }
                 />

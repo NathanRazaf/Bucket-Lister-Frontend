@@ -1,0 +1,122 @@
+.bucket-list-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    margin-bottom: 16px;
+    width: 100%;
+    max-width: 350px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.bucket-list-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.bucket-list-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.bucket-list-title {
+    margin: 0;
+    color: #ff69b4;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.privacy-indicator {
+    font-size: 1rem;
+}
+
+.bucket-list-description {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 12px;
+}
+
+.bucket-list-description p {
+    margin: 0;
+}
+
+.bucket-list-items {
+    margin-bottom: 16px;
+}
+
+.bucket-list-items ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.bucket-list-items li {
+    padding: 6px 0;
+    position: relative;
+    padding-left: 20px;
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.bucket-list-items li:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #ff69b4;
+    font-weight: bold;
+}
+
+.bucket-list-items li.completed {
+    text-decoration: line-through;
+    color: #888;
+}
+
+.bucket-list-items li.completed:before {
+    content: "✓";
+    color: #4CAF50;
+}
+
+.no-items {
+    font-style: italic;
+    color: #999;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.more-items {
+    text-align: center;
+    color: #ff69b4;
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-top: 4px;
+}
+
+.bucket-list-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8rem;
+}
+
+.creation-date {
+    color: #888;
+}
+
+.view-button {
+    background-color: #ff69b4;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 6px 12px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.view-button:hover {
+    background-color: #ff1493;
+    text-decoration: none;
+    color: white;
+}

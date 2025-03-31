@@ -37,26 +37,6 @@ export const getBucketItems = async (token, bucket_list_id) => {
     }
 }
 
-export const getBucketItem = async (token, bucket_list_id, item_id) => {
-    try {
-        const response = await fetch(`${BACKEND_URL}/api/bucket-lists/${bucket_list_id}/items/${item_id}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`,
-            },
-
-        })
-        return await response.json()
-    } catch (error) {
-        if (error instanceof ApiError) {
-            throw error;
-        }
-        throw new ApiError("An unexpected error occurred", 500, error.message);
-    }
-}
-
-
 export const updateBucketItem = async (token, bucket_list_id, item_id, content, is_completed) => {
     try {
         const response = await fetch(`${BACKEND_URL}/api/bucket-lists/${bucket_list_id}/items/${item_id}`, {

@@ -19,9 +19,27 @@ export const createBucketList = async (token, title, description) => {
     }
 }
 
-export const getBucketLists = async (token) => {
+export const getMyBucketLists = async (token) => {
     try {
         const response = await fetch(`${BACKEND_URL}/api/bucket-lists`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+        })
+        return await response.json()
+    } catch (error) {
+        if (error instanceof ApiError) {
+            throw error;
+        }
+        throw new ApiError("An unexpected error occurred", 500, error.message);
+    }
+}
+
+export const getCollabBucketLists = async (token) => {
+    try {
+        const response = await fetch(`${BACKEND_URL}/api/bucket-lists/collaborated`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -135,6 +153,24 @@ export const getSharedBucketList = async (sharedToken) => {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
+            },
+        })
+        return await response.json()
+    } catch (error) {
+        if (error instanceof ApiError) {
+            throw error;
+        }
+        throw new ApiError("An unexpected error occurred", 500, error.message);
+    }
+}
+
+export const getBucketListCollaborators = async (token, id) => {
+    try {
+        const response = await fetch(`${BACKEND_URL}/api/bucket-lists/${id}/collaborators`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
             },
         })
         return await response.json()
