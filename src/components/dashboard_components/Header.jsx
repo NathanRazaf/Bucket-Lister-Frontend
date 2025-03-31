@@ -1,6 +1,7 @@
 import React, {useEffect, useRef, useState} from "react";
 import {me} from "../../functions/backend/account_functions.js";
 import "../../assets/styles/Header.css";
+import {Link} from "react-router-dom";
 
 
 const Header = () => {
@@ -94,7 +95,9 @@ const Header = () => {
 
     return (
         <div className="dashboard-header">
-            <h1>Bucket-Lister</h1>
+            <Link to={'/dashboard'} className={"dashboard-header-title"}>
+                <h1>Bucket-Lister</h1>
+            </Link>
             <div className="dashboard-header-buttons">
                 {/* Account dropdown container */}
                 <div className="account-dropdown-container" ref={dropdownRef}>

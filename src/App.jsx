@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import AuthForm from './components/AuthForm';
 import ProtectedRoute from './components/ProtectedRoute'; // We'll create this below
 import Dashboard from "./components/Dashboard.jsx";
+import BucketListDetail from "./components/bucket_list_details/BucketListDetail.jsx";
 
 const App = () => {
     return (
@@ -25,7 +26,7 @@ const App = () => {
                         </ProtectedRoute>
                     }
                 />
-
+                <Route path="/bucket-list/:id" element={<BucketListDetail />} />
                 {/* Catch all - 404 */}
                 <Route path="*" element={<div>Page Not Found</div>} />
             </Routes>
