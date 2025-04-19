@@ -22,15 +22,13 @@ export const getAllMyBucketLists = async (token) => {
     try {
         const bucketLists = await getMyBucketLists(token);
 
-        const fullBucketLists = [];
-        for (const bucketList of bucketLists) {
+        return await Promise.all(bucketLists.map(async (bucketList) => {
             const items = await getBucketItems(token, bucketList.id);
-            fullBucketLists.push({
+            return {
                 ...bucketList,
                 items,
-            });
-        }
-        return fullBucketLists;
+            };
+        }));
     } catch (error) {
         if (error instanceof ApiError) {
             throw error;
@@ -43,15 +41,13 @@ export const getAllCollabBucketLists = async (token) => {
     try {
         const bucketLists = await getCollabBucketLists(token);
 
-        const fullBucketLists = [];
-        for (const bucketList of bucketLists) {
+        return await Promise.all(bucketLists.map(async (bucketList) => {
             const items = await getBucketItems(token, bucketList.id);
-            fullBucketLists.push({
+            return {
                 ...bucketList,
                 items,
-            });
-        }
-        return fullBucketLists;
+            };
+        }));
     } catch (error) {
         if (error instanceof ApiError) {
             throw error;

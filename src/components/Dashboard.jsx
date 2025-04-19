@@ -16,13 +16,16 @@ const Dashboard = () => {
     const [shareSuccess, setShareSuccess] = useState('');
 
     useEffect(() => {
-        // Fetch all data when component mounts
         const fetchAllData = async () => {
             try {
                 setLoading(true);
                 const token = localStorage.getItem('token');
 
-                // Use Promise.all to fetch both lists concurrently
+                if (!token) {
+                    setError("Authentication token not found. Please log in again.");
+                    return;
+                }
+
                 const [myLists, sharedLists] = await Promise.all([
                     getAllMyBucketLists(token),
                     getAllCollabBucketLists(token)
@@ -33,22 +36,26 @@ const Dashboard = () => {
                 setError('');
             } catch (error) {
                 console.error("Error fetching bucket lists:", error);
-                setError(error.message || "Failed to load bucket lists");
+                setError(error.message || "Failed to load bucket lists. Please try again later.");
             } finally {
                 setLoading(false);
             }
         };
 
-        fetchAllData().then(r => r);
+        fetchAllData();
     }, []);
 
     const retryFetchData = () => {
-        // Function to retry fetching all data
         const fetchAllData = async () => {
             try {
                 setLoading(true);
-                setError('');
+                setError(''); // Clear previous error
                 const token = localStorage.getItem('token');
+
+                if (!token) {
+                    setError("Authentication token not found. Please log in again.");
+                    return;
+                }
 
                 const [myLists, sharedLists] = await Promise.all([
                     getAllMyBucketLists(token),
@@ -59,16 +66,15 @@ const Dashboard = () => {
                 setCollabBucketLists(sharedLists);
             } catch (error) {
                 console.error("Error fetching bucket lists:", error);
-                setError(error.message || "Failed to load bucket lists");
+                setError(error.message || "Failed to load bucket lists. Please try again later.");
             } finally {
                 setLoading(false);
             }
         };
 
-        fetchAllData().then(r => r);
+        fetchAllData();
     };
 
-    // Handle Share Code Submission
     const handleShareCodeSubmit = async (e) => {
         e.preventDefault();
         setShareError('');
@@ -82,21 +88,24 @@ const Dashboard = () => {
         try {
             const token = localStorage.getItem('token');
 
+            if (!token) {
+                setShareError("Authentication token not found. Please log in again.");
+                return;
+            }
+
             await getSharedBucketList(token, shareCode);
 
             setShareSuccess("Bucket list added successfully!");
             setShareCode('');
 
-            // Refresh the shared lists
             const sharedLists = await getAllCollabBucketLists(token);
             setCollabBucketLists(sharedLists);
         } catch (error) {
             console.error("Error adding shared bucket list:", error);
-            setShareError(error.message || "Failed to add shared bucket list");
+            setShareError(error.message || "Failed to add shared bucket list. Please try again later.");
         }
     };
 
-    // If still loading, show a loading indicator for the entire page
     if (loading) {
         return (
             <div className="dashboard">
